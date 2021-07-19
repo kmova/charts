@@ -87,7 +87,7 @@ provisioner:
 localprovisioner:
   enabled: true
   image: "openebs/provisioner-localpv"
-  imageTag: "2.11.0"
+  imageTag: "2.11.1"
   replicas: 1
   enableLeaderElection: true
   basePath: "/var/openebs/local"

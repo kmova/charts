@@ -10,24 +10,65 @@ This repository contains OpenEBS Helm charts and other example artifacts like op
 
 ## OpenEBS Helm Chart
 
-The helm chart is located under [./charts/](./charts/) directory. 
+The helm chart is located under [./charts/openebs/](./charts/openebs/) directory. 
 
-When new changes to helm chart are pushed to master branch, the changes are picked up by [Helm Chart releaser](https://github.com/helm/chart-releaser-action) GitHub Action. The chart releaser will: 
-- Upload the new version of the charts to the [GitHub releases](https://github.com/openebs/charts/releases).
-- Update the helm repo index file and push to the [GitHub Pages branch](https://github.com/openebs/charts/tree/gh-pages).
+OpenEBS helm chart is an umbrella chart that pulls together engine specific charts. The engine charts are included as dependencies in [Chart.yaml](charts/openebs/Chart.yaml).
 
-## Mayastor Helm Chart
+OpenEBS helm chart will include templates for the common tools or components that are used by multiple engines like:
+- Node Disk Manager related components
+- Dynamic Local Provisioner related components
+- Security Policies like RBAC, PSP, Kyverno 
+- cStor and Jiva out-of-tree provisioners that will be replaced by respective engine chart listed below
 
-Helm chart for Mayastor is currently maintained [along the Mayastor code-base](https://github.com/openebs/Mayastor/tree/develop/chart). Please, note, that it is being actively developed and can change or break without warning.
+Engine charts included as dependencies are:
+- [cStor](https://github.com/openebs/cstor-operators/tree/master/deploy/helm/charts)
+- [Jiva](https://github.com/openebs/jiva-operator/tree/master/deploy/helm/charts)
+- [ZFS Local PV](https://github.com/openebs/zfs-localpv/tree/master/deploy/helm/charts)
+- [LVM Local PV](https://github.com/openebs/lvm-localpv/tree/master/deploy/helm/charts)
+
+Some of the other charts that will be included in the upcoming releases are:
+- [Rawfile Local PV](https://github.com/openebs/rawfile-localpv/tree/master/deploy/charts/rawfile-csi)
+- [Mayastor](https://github.com/openebs/mayastor/tree/develop/chart)
+- [Dynamic NFS](https://github.com/openebs/dynamic-nfs-provisioner/tree/develop/deploy/helm/charts)
+
+### Releasing a new version 
+
+- Raise a PR with the required changes to the master branch. 
+- Tag the [maintainers](./MAINTAINERS) for review
+- Once changes are reviewed and merged, the changes are picked up by [Helm Chart releaser](https://github.com/helm/chart-releaser-action) GitHub Action. The chart releaser will: 
+  - Upload the new version of the charts to the [GitHub releases](https://github.com/openebs/charts/releases).
+  - Update the helm repo index file and push to the [GitHub Pages branch](https://github.com/openebs/charts/tree/gh-pages).
+
 
 ## OpenEBS Artifacts
 
+The artifacts are located in the [GitHub Pages(gh-pages) branch](https://github.com/openebs/charts/tree/gh-pages).
+
+The files can be accessed either as github rawfile or as hosted files. Example, openebs operator can be used as follows:
+- As github raw file URL:
+  ```
+  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/gh-pages/openebs-operator.yaml
+  ```
+- As hosted URL:
+  ```
+  kubectl apply -f kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
+  ```
+
 This is a collection of YAMLs or scripts that help to perform some OpenEBS tasks like:
 - YAML file to setup OpenEBS via kubectl.
+  - [OpenEBS Commons Operator](https://github.com/openebs/charts/blob/gh-pages/openebs-operator.yaml)
+  - [OpenEBS cStor](https://github.com/openebs/charts/blob/gh-pages/cstor-operator.yaml)
+  - [OpenEBS Jiva](https://github.com/openebs/charts/blob/gh-pages/jiva-operator.yaml)
+  - [OpenEBS Hostpath](https://github.com/openebs/charts/blob/gh-pages/hostpath-operator.yaml) 
+  - [OpenEBS Hostpath and Device](https://github.com/openebs/charts/blob/gh-pages/openebs-operator-lite.yaml)
+  - [OpenEBS LVM Local PV](https://github.com/openebs/charts/blob/gh-pages/lvm-operator.yaml)
+  - [OpenEBS ZFS Local PV](https://github.com/openebs/charts/blob/gh-pages/zfs-operator.yaml)
+- YAML file to install OpenEBS prerequisties on hosts via nsenter pods via kubectl.
+  - [Setup iSCSI on Ubuntu](https://github.com/openebs/charts/blob/gh-pages/openebs-ubuntu-setup.yaml)
+  - [Setup iSCSI on Amazon Linux](https://github.com/openebs/charts/blob/gh-pages/openebs-amazonlinux-setup.yaml)
 - Scripts to push the OpenEBS container images to a custom registry for air-gapped environments. 
 - and more. 
 
-The artifacts are located in the [GitHub Pages(gh-pages) branch](https://github.com/openebs/charts/tree/gh-pages).
 
 ## Contributing
 

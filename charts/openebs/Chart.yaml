@@ -1,5 +1,5 @@
 apiVersion: v2
-version: 2.11.2
+version: 2.11.3
 name: openebs
 appVersion: 2.11.0
 description: Container Attached Storage
@@ -26,7 +26,7 @@ dependencies:
     repository: "https://openebs.github.io/node-disk-manager"
     condition: openebs-ndm.enabled
   - name: localpv-provisioner
-    version: "2.11.0"
+    version: "2.11.1"
     repository: "https://openebs.github.io/dynamic-localpv-provisioner"
     condition: localpv-provisioner.enabled
   - name: cstor
@@ -34,7 +34,7 @@ dependencies:
     repository: "https://openebs.github.io/cstor-operators"
     condition: cstor.enabled
   - name: jiva
-    version: "2.11.0"
+    version: "2.11.1"
     repository: "https://openebs.github.io/jiva-operator"
     condition: jiva.enabled
   - name: zfs-localpv
